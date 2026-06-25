@@ -55,7 +55,7 @@ body {
 
 .page:not(.has-selection) .visual {
   width: 100vw;
-  min-height: 100vh;
+  min-height: max(100vh, 1080px);
   border-radius: 0;
   box-shadow: none;
   background:
@@ -239,23 +239,23 @@ body {
   z-index: 12;
   left: 34px;
   top: 220px;
-  width: 340px;
+  width: min(64vw, 500px);
   display: grid;
-  gap: 8px;
+  gap: 10px;
 }
 
 .floor-button {
-  min-height: 38px;
+  min-height: 56px;
   border: 1px solid rgba(255,255,255,.55);
-  border-left: 8px solid var(--area-color);
-  border-radius: 12px;
+  border-left: 14px solid var(--area-color);
+  border-radius: 18px;
   background: rgba(255,255,255,.88);
   backdrop-filter: blur(6px);
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 7px 12px;
-  font-size: 14px;
+  gap: 16px;
+  padding: 12px 22px;
+  font-size: 25px;
   font-weight: 800;
   color: #0f172a;
   box-shadow: 0 10px 30px rgba(15,23,42,.18);
@@ -265,8 +265,8 @@ body {
 
 .floor-button::before {
   content: "";
-  width: 13px;
-  height: 13px;
+  width: 23px;
+  height: 23px;
   border-radius: 999px;
   background: var(--area-color);
   flex: 0 0 auto;
@@ -648,7 +648,7 @@ body {
   }
 
   .visual {
-    height: 900px;
+    height: 1080px;
   }
 
   .main-steps {
@@ -670,6 +670,20 @@ body {
     right: 18px;
     width: auto;
     top: 350px;
+  }
+
+  .floor-button {
+    min-height: 50px;
+    border-left-width: 10px;
+    border-radius: 16px;
+    gap: 12px;
+    padding: 10px 16px;
+    font-size: 18px;
+  }
+
+  .floor-button::before {
+    width: 18px;
+    height: 18px;
   }
 
   .page.has-selection .visual {
@@ -979,12 +993,6 @@ const areas = [
         opportunity: "Bulk payment file generation",
         use_case: "Generate approved payment files from ERP or payment proposal data and upload them to online banking or a payment platform.",
         impact: "Less manual bank entry, fewer payment errors and faster payment execution."
-      },
-      {
-        pain: "Lack of supplier invoice payment status visibility",
-        opportunity: "Supplier invoice payment status tracker",
-        use_case: "Track invoice status from pending approval to prepared, sent to bank, paid, rejected, blocked or disputed.",
-        impact: "Fewer payment status queries and better coordination between AP, Treasury and suppliers."
       },
       {
         pain: "Duplicate payment risk",
@@ -1303,6 +1311,11 @@ const areas = [
     ]
   }
 ];
+
+const cfoAreaIndex = areas.findIndex(area => area.short === "CFO");
+if (cfoAreaIndex > -1) {
+  areas.push(...areas.splice(cfoAreaIndex, 1));
+}
 
 const page = document.querySelector(".page");
 const panel = document.getElementById("panel");
